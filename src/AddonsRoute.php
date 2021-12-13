@@ -27,6 +27,10 @@ class AddonsRoute
         $app = app();
         $request = $app->request;
 
+        $addon = $addon ? trim(call_user_func('strtolower', $addon)) : '';
+        $controller = $controller ? trim(call_user_func('strtolower', $controller)) : 'index';
+        $action = $action ? trim(call_user_func('strtolower', $action)) : 'index';
+
         Event::trigger('addons_begin', $request);
 
         if (empty($addon) || empty($controller) || empty($action)) {
@@ -64,9 +68,9 @@ class AddonsRoute
         if (is_callable([$instance, $action])) {
             // 执行操作方法
             $call = [$instance, $action];
-        } elseif (is_callable([$instance, '_empty'])) {
+        } elseif (is_callable([$instance, '__call'])) {
             // 空操作
-            $call = [$instance, '_empty'];
+            $call = [$instance, '__call'];
             $vars = [$action];
         } else {
             // 操作不存在

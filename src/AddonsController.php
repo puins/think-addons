@@ -63,6 +63,9 @@ abstract class AddonsController
         $this->app = $app;
         $this->request = $this->app->request;
         $this->view = $this->app->view;
+        $this->view->config([
+            'view_path' => config('view.view_path'),
+        ]);
 
         // 控制器初始化
         $this->initialize();

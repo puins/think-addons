@@ -35,7 +35,7 @@ class AddonsService extends Service
         // 加载插件系统服务
         $this->loadService();
         // 绑定插件容器
-        $this->app->bind('addons', Service::class);
+        $this->app->bind('addons', AddonsService::class);
     }
 
     /**
@@ -47,7 +47,7 @@ class AddonsService extends Service
     {
         $this->registerRoutes(function (Route $route) {
             // 路由脚本
-            $execute = '\\think\\addons\\AddonsRoute::execute';
+            $execute = '\\think\\AddonsRoute::execute';
 
             // 注册插件公共中间件
             if (is_file($this->app->addons->getAddonsPath() . 'middleware.php')) {
