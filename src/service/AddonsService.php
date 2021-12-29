@@ -147,7 +147,9 @@ class AddonsService extends Service
 
                     $appPath = app()->getBasePath() . $name . DIRECTORY_SEPARATOR;
 
-                    if (false == array_search($name, $map) && !is_dir($appPath)) {
+                    $addonPath = $addonsPath . $name . DIRECTORY_SEPARATOR;
+
+                    if (false == array_search($name, $map) && !is_dir($appPath) && is_dir($addonPath)) {
                         app('http')->name($name);
                         $this->loadAddon($name);
                         $this->registerRoutes(function (Route $route) {

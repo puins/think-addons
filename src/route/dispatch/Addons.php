@@ -114,7 +114,7 @@ class Addons extends Url
         //判断是否是二级绑定
         $route = app('addons')->routeInfo(app('http')->getName());
 
-        if ($route['rewrite']) {
+        if (count($route) && $route['rewrite']) {
             $options = $this->rule->getOption();
 
             $pathinfo = $options['append']['addon'] . '/' . $options['append']['controller'] . '/' . $options['append']['action'];
