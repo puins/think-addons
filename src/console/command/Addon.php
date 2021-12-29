@@ -70,8 +70,10 @@ class Addon extends Command
         $this->createCommon($app);
         // 创建插件的默认页面
         $this->createHello($app, $namespace);
-        // 创建插件的默认页面
+        // 创建插件的配置文件
         $this->createIni($app);
+        // 创建插件的路由文件
+        $this->createRoute($app);
 
         foreach ($list as $path => $file) {
             if ('__dir__' == $path) {
@@ -165,7 +167,7 @@ class Addon extends Command
     }
 
     /**
-     * 创建插件的公共文件
+     * 创建插件的配置文件
      * @access protected
      * @param  string $app 目录
      * @return void
@@ -177,6 +179,26 @@ class Addon extends Command
 
         if (!is_file($filename)) {
             $content = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'info.stub');
+            $content = str_replace(['{%name%}'], [$app], $content);
+
+            file_put_contents($filename, $content);
+
+        }
+    }
+
+    /**
+     * 创建插件的路由文件
+     * @access protected
+     * @param  string $app 目录
+     * @return void
+     */
+    protected function createRoute(string $app): void
+    {
+        $addonPath = $this->basePath . ($app ? $app . DIRECTORY_SEPARATOR : '');
+        $filename = $addonPath . 'route.php';
+
+        if (!is_file($filename)) {
+            $content = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'route.stub');
             $content = str_replace(['{%name%}'], [$app], $content);
 
             file_put_contents($filename, $content);
